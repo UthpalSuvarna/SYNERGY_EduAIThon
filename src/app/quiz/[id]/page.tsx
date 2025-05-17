@@ -34,7 +34,7 @@ interface QuizState {
     isLoading: boolean
 }
 
-export default function QuizContainer() {
+export default function QuizContainer({ params }: { params: { id: string } }) {
     const [quizState, setQuizState] = useState<QuizState>({
         questions: [],
         currentQuestionIndex: 0,
@@ -51,7 +51,9 @@ export default function QuizContainer() {
         const fetchQuestions = async () => {
             try {
                 // Replace with your actual API endpoint
-                const response = await fetch("/api/questions")
+                const response = await fetch(`/api/questions?topicid=${params.id}`, {
+                    method: "GET",
+                })
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch questions")
