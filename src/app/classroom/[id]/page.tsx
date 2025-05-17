@@ -83,7 +83,10 @@ export default async function SubjectPage({ params }: { params: { id: string } }
           <div>
             <h2 className="text-xl font-semibold mb-2">Recent Announcements</h2>
             <p className="text-gray-500 italic">No recent announcements</p>
+           
           </div>
+
+          
         </CardContent>
       </Card>
 
@@ -96,6 +99,9 @@ export default async function SubjectPage({ params }: { params: { id: string } }
               View Document
             </a>
             <a href={`/document/${document.id}`} className="text-blue-500 hover:underline p-3">View document info</a>
+             <Link href={`/classroom/${params.id}/chat`}>
+              <Button className="mt-4 w-full" variant="secondary">Open Chatbot</Button>
+            </Link>
           </div>
         ))}
       </div>
