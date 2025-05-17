@@ -89,7 +89,7 @@ model AdminClass {
   adminEmail  String
   className   String
   description String?
-  documents   Documents[] // Added relation field
+  documents   Documents[] @relation("AdminClassDocuments") // Added relation name
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -101,8 +101,8 @@ model Documents {
   name     String
   fileType String
   fileUrl  String
-  class    AdminClass @relation(fields: [classId], references: [id], onDelete: Cascade)
-  topics   Topic[] // Added opposite relation field
+  class    AdminClass @relation("AdminClassDocuments", fields: [classId], references: [id], onDelete: Cascade)
+  topics   Topic[]    @relation("DocumentTopics") // Added relation name
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -112,7 +112,7 @@ model Topic {
   id         String    @id @default(cuid())
   topicName  String
   documentId String
-  document   Documents @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  document   Documents @relation("DocumentTopics", fields: [documentId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
