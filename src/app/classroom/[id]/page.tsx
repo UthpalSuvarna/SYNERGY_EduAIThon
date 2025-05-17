@@ -2,42 +2,56 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { subjects } from "@/lib/data"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card"
+import { subjects } from "../../lib/data"
+import { prisma } from "@/lib/prisma-edge"
 
-export default function SubjectPage({ params }: { params: { id: string } }) {
-  const subject = subjects.find((s) => s.id === params.id)
+export default async function SubjectPage({ params }: { params: { id: string } }) {
+  const paramId = params.id
+  const classInfo = await prisma.adminClass.findUnique(
+    {
+      where: {
+        id: paramId,
+      },
+      select: {
+        id: true,
+        className: true,
+        adminEmail: true,
+        description: true
 
-  if (!subject) {
+      },
+    }
+  )
+
+  if (!classInfo) {
     notFound()
   }
 
   return (
     <div className="container mx-auto py-8">
-      <Link href="/">
+      <Link href="/classroom">
         <Button variant="ghost" className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Classroom
         </Button>
       </Link>
 
-      <Card className="border-t-4" style={{ borderTopColor: subject.color }}>
+      <Card className="border-t-4">
         <CardHeader>
-          <CardTitle className="text-3xl">{subject.name}</CardTitle>
-          <CardDescription className="text-lg">{subject.teacher}</CardDescription>
+          <CardTitle className="text-3xl">{classInfo.className}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
             <h2 className="text-xl font-semibold mb-2">Course Description</h2>
-            <p className="text-gray-700">{subject.description}</p>
+            <p className="text-gray-700">{classInfo.description}</p>
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-2">Contact Information</h2>
             <div className="flex items-center text-gray-700">
               <Mail className="mr-2 h-4 w-4" />
-              <a href={`mailto:${subject.email}`} className="hover:underline">
-                {subject.email}
+              <a href={`mailto:${classInfo.adminEmail}`} className="hover:underline">
+                {classInfo.adminEmail}
               </a>
             </div>
           </div>
