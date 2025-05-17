@@ -54,7 +54,9 @@ export default async function SubjectPage({ params }: { params: { id: string } }
               <div className="mt-4">
                 <h2 className="text-xl font-semibold mb-2">Admin Actions</h2>
                 <div className="space-y-2">
-                  <UploadDocument ClassId={classInfo.id.toString()} />
+                  <div className="bg-slate-400 rounded-2xl p-4">
+                    <UploadDocument ClassId={classInfo.id.toString()} />
+                  </div>
                   <Button variant="destructive" className="w-full">
                     Delete Class
                   </Button>
