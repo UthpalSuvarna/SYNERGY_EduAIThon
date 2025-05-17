@@ -8,7 +8,7 @@ import re
 from io import BytesIO
 
 # Set your API key
-GOOGLE_API_KEY = 'AIzaSyCTyBBU8fzJ_TQuQkop-beH9IlzyyuVlkc'  # Replace with your real key
+GOOGLE_API_KEY = 'Your_api_key'  # Replace with your real key
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
@@ -55,30 +55,52 @@ def upload_pdf_url():
 def generate_quiz():
     data = request.get_json()
     topic = data.get('topic')
+    pdf_url = data.get('pdfUrl')
+
     if not topic:
         return jsonify({'error': 'No topic provided'}), 400
+    if not pdf_url:
+        return jsonify({'error': 'No PDF URL provided'}), 400
 
-    quiz_prompt = f"""
-    Generate 10 multiple-choice questions based on the topic: {topic}
+    try:
+        # Download and extract content from the PDF
+        response = requests.get(pdf_url)
+        response.raise_for_status()
+        pdf_file = BytesIO(response.content)
 
-    For each question, provide:
-    - The question text
-    - Four options labeled A, B, C, and D
-    - Indicate the correct answer
+        with pdfplumber.open(pdf_file) as pdf:
+            content = "\n".join(page.extract_text() for page in pdf.pages if page.extract_text())
 
-    Format:
+        # Limit content length for the prompt
+        content_excerpt = content[:3000]
 
-    Q1. Question text?
-    A. Option A
-    B. Option B
-    C. Option C
-    D. Option D
-    Answer: B
-    """
-    quiz_response = model.generate_content(quiz_prompt)
-    quiz_text = quiz_response.text.strip()
+        quiz_prompt = f"""
+        Based on the topic "{topic}" and the following content, generate 10 multiple-choice questions.
 
-    return jsonify({'quiz': quiz_text})
+        Content:
+        {content_excerpt}
+
+        For each question, provide:
+        - The question text
+        - Four options labeled A, B, C, and D
+        - Indicate the correct answer
+
+        Format:
+
+        Q1. Question text?
+        A. Option A
+        B. Option B
+        C. Option C
+        D. Option D
+        Answer: B
+        """
+        quiz_response = model.generate_content(quiz_prompt)
+        quiz_text = quiz_response.text.strip()
+
+        return jsonify({'quiz': quiz_text})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

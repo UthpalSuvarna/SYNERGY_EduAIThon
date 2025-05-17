@@ -28,7 +28,7 @@ export default async function SubjectPage({
 
     return (
         <div className="max-w-7xl mx-auto space-y-6 px-4 py-8">
-            {topics.map((topic) => (
+            {topics.map((topic : any) => (
                 <Card key={topic.id} className="w-full rounded-2xl shadow-md">
                     <CardHeader>
                         <CardTitle className="text-xl font-semibold line-clamp-2">
