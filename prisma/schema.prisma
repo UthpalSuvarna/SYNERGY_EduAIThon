@@ -115,6 +115,7 @@ model Topic {
   topicName  String
   documentId String
   document   Documents @relation("DocumentTopics", fields: [documentId], references: [id], onDelete: Cascade)
+  scores     Score[]   @relation("TopicScores")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -126,6 +127,7 @@ model Score {
   userId  String
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   topicId String
+  topic   Topic  @relation("TopicScores", fields: [topicId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

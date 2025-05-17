@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Score" ADD CONSTRAINT "Score_topicId_fkey" FOREIGN KEY ("topicId") REFERENCES "Topic"("id") ON DELETE CASCADE ON UPDATE CASCADE;

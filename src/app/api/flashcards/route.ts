@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server"
+import { prisma } from "@/lib/prisma-edge";
+// const FLASH_API_URL =
 
 // Mock data for demonstration purposes
 // In a real application, this would come from a database or external API
@@ -32,9 +34,29 @@ const flashcardsData = [
     },
 ]
 
-export async function GET() {
+export async function GET(request: Request) {
     // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    //await new Promise((resolve) => setTimeout(resolve, 1000))
+    // const { searchParams } = new URL(request.url, 'http://localhost');
+    // const topicid = searchParams.get("topicid");
+
+    // const topicInfo = await prisma.topic.findUnique({
+    //     where: {
+    //         id: topicid || undefined
+    //     }
+    // })
+
+    // const docInfo = await prisma.documents.findUnique({
+    //     where: {
+    //         id: topicInfo?.documentId
+    //     }
+    // })
+
+    // const rawResponse = await fetch(FLASH_API_URL, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ topic: topicInfo?.topicName, pdf_url: docInfo?.fileUrl }),
+    // });
 
     return NextResponse.json(flashcardsData)
 }
