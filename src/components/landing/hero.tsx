@@ -6,7 +6,7 @@ export default function HeroSection() {
             <div className="grid place-items-center lg:max-w-screen-xl gap-5 mx-auto py-16 md:py-32">
                 <h1 className="lg:text-8xl md:text-6xl text-4xl font-extrabold mx-auto">Welcome Back<span className="text-primary"></span></h1>
                 <p className="max-w-screen-sm mx-auto md:text-xl text-sm md:px-0 px-12 text-muted-foreground text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
+                    LearningRoom is an innovative educational platform designed to enhance student engagement and retention.
                 </p>
                 <div className="md:space-x-4 md:flex grid gap-y-2">
                     <Link
