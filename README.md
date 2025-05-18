@@ -95,4 +95,4 @@ This intelligent learning assistant transforms passive content consumption into 
 
 ## 📹 Demo Video
 
-[Watch the Demo](https://drive.google.com/file/d/1C1CrK2MTcPXz-g7r4F4AFGuhpP8ZfPI3/view?usp=drive_link)
+[Watch the Demo]([https://drive.google.com/file/d/1C1CrK2MTcPXz-g7r4F4AFGuhpP8ZfPI3/view?usp=drive_link](https://drive.google.com/file/d/1CVzWk-5HMd57LjxP8dUzvgVQVtzvjk6e/view?usp=sharing))
