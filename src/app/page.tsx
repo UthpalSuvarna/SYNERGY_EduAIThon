@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
+import HeroSection from "@/components/landing/hero";
+import { HeroImage } from "@/components/landing/image";
 
 function Navbar() {
   const { data: session } = useSession();
@@ -35,9 +37,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <p>{session?.user?.name}</p>
-      </div>
+      <HeroSection />
+      <HeroImage />
     </>
   );
 }

@@ -12,7 +12,7 @@ interface Flashcard {
     answer: string
 }
 
-export function Flashcards() {
+export function Flashcards({ topicId }: { topicId: string }) {
     const [flashcards, setFlashcards] = useState<Flashcard[]>([])
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isFlipped, setIsFlipped] = useState(false)
@@ -21,7 +21,9 @@ export function Flashcards() {
     useEffect(() => {
         const fetchFlashcards = async () => {
             try {
-                const response = await fetch("/api/flashcards")
+                const response = await fetch(`/api/flashcards?topicId=${topicId}`, {
+                    method: "GET"
+                })
                 const data = await response.json()
                 setFlashcards(data)
                 setIsLoading(false)
