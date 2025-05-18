@@ -10,7 +10,7 @@ function Navbar() {
 
   return (
     <nav className="w-full flex justify-between items-center p-4 bg-gray-800 text-white">
-      <div className="text-lg font-bold">Eduaithon</div>
+      <div className="text-lg font-bold">LearningRoom.</div>
       <div>
         {session ? (
           <button
