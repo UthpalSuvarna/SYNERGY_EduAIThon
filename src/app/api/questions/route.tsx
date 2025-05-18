@@ -2,7 +2,8 @@
 import { prisma } from "@/lib/prisma-edge";
 import { NextResponse } from "next/server"
 
-const RAW_QUIZ_API_URL = "https://73a0-103-213-211-203.ngrok-free.app/generate-quiz"
+//const RAW_QUIZ_API_URL = "https://73a0-103-213-211-203.ngrok-free.app/generate-quiz"
+const RAW_QUIZ_API_URL = process.env.RAW_QUIZ_API_URL
 
 // This is a mock API endpoint that would be replaced with your actual API call
 export async function GET(request: Request) {
@@ -24,6 +25,12 @@ export async function GET(request: Request) {
                 id: topicInfo?.documentId
             }
         })
+
+        if (!RAW_QUIZ_API_URL) {
+            throw new Error("RAW_QUIZ_API_URL is not defined");
+        }
+
+        console.log(RAW_QUIZ_API_URL)
 
         const rawResponse = await fetch(RAW_QUIZ_API_URL, {
             method: "POST",

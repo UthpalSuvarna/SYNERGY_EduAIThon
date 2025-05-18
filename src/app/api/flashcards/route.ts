@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma-edge";
-const FLASH_API_URL = "https://a5ab-2401-4900-61a4-9ec1-7896-dcc4-9178-5b6a.ngrok-free.app/generate_flashcards"
-
+//const FLASH_API_URL = "https://a5ab-2401-4900-61a4-9ec1-7896-dcc4-9178-5b6a.ngrok-free.app/generate_flashcards"
+const FLASH_API_URL = process.env.FLASH_API_URL
 // Mock data for demonstration purposes
 // In a real application, this would come from a database or external API
 const flashcardsData = [
@@ -63,6 +63,10 @@ export async function GET(request: Request) {
 
         if (!docInfo) {
             throw new Error("Document not found");
+        }
+
+        if (!FLASH_API_URL) {
+            throw new Error("FLASH_API_URL is not defined");
         }
 
         const rawResponse = await fetch(FLASH_API_URL, {
